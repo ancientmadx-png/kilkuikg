@@ -176,14 +176,14 @@ export default function PricingModal({ userType, userAddress, onClose, onSuccess
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6 border-b border-gray-200">
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
+      <div className="bg-gradient-to-br from-[#111] to-[#0b0b0b] border border-[#1f1f1f] rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto text-white">
+        <div className="p-6 border-b border-[#1f1f1f]">
           <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold">
               {step === 'select' ? 'Choose Your Plan' : 'Complete Payment'}
             </h2>
-            <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+            <button onClick={onClose} className="text-gray-400 hover:text-white">
               <X className="w-6 h-6" />
             </button>
           </div>
@@ -195,18 +195,18 @@ export default function PricingModal({ userType, userAddress, onClose, onSuccess
               {plans.map((plan) => (
                 <div
                   key={plan.id}
-                  className="border-2 border-gray-200 rounded-lg p-6 hover:border-blue-500 transition-colors cursor-pointer"
+                  className="border border-[#1f1f1f] bg-black rounded-lg p-6 hover:border-yellow-400 transition-colors cursor-pointer"
                   onClick={() => handlePlanSelect(plan)}
                 >
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{plan.name}</h3>
+                  <h3 className="text-xl font-bold mb-2">{plan.name}</h3>
                   <div className="mb-4">
-                    <span className="text-3xl font-bold text-blue-600">${plan.price}</span>
-                    <span className="text-gray-600">/{plan.currency}</span>
+                    <span className="text-3xl font-bold text-yellow-400">${plan.price}</span>
+                    <span className="text-gray-400">/{plan.currency}</span>
                   </div>
                   <ul className="space-y-2">
                     {Object.entries(plan.features).map(([key, value]) => (
-                      <li key={key} className="flex items-start text-sm text-gray-700">
-                        <Check className="w-4 h-4 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+                      <li key={key} className="flex items-start text-sm text-gray-300">
+                        <Check className="w-4 h-4 text-yellow-400 mr-2 mt-0.5 flex-shrink-0" />
                         <span>
                           {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                           {typeof value === 'number' && value !== -1 && `: ${value}`}
@@ -216,68 +216,68 @@ export default function PricingModal({ userType, userAddress, onClose, onSuccess
                       </li>
                     ))}
                   </ul>
-                  <button className="w-full mt-6 bg-blue-600 text-white py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors">
+                  <button className="w-full mt-6 bg-yellow-400 text-black py-2 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
                     Select Plan
                   </button>
                 </div>
               ))}
             </div>
-          ) : (
+          ):contentReference[oaicite:0]{index=0} : (
             <div className="max-w-md mx-auto">
               {error && (
-                <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                <div className="mb-4 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-sm text-red-400">
                   {error}
                 </div>
               )}
 
-              <div className="bg-gray-50 rounded-lg p-6 mb-6">
-                <h3 className="font-semibold text-gray-900 mb-4">Order Summary</h3>
+              <div className="bg-black border border-[#1f1f1f] rounded-lg p-6 mb-6">
+                <h3 className="font-semibold mb-4">Order Summary</h3>
                 <div className="space-y-2 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Plan:</span>
-                    <span className="font-medium">{selectedPlan?.name}</span>
+                  <div className="flex justify-between text-gray-300">
+                    <span>Plan:</span>
+                    <span className="font-medium text-white">{selectedPlan?.name}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span className="text-gray-600">Price:</span>
-                    <span className="font-medium">${selectedPlan?.price}</span>
+                  <div className="flex justify-between text-gray-300">
+                    <span>Price:</span>
+                    <span className="font-medium text-white">${selectedPlan?.price}</span>
                   </div>
                   {discount > 0 && (
-                    <div className="flex justify-between text-green-600">
+                    <div className="flex justify-between text-yellow-400">
                       <span>Discount:</span>
                       <span className="font-medium">-${discount.toFixed(2)}</span>
                     </div>
                   )}
-                  <div className="border-t border-gray-200 pt-2 mt-2 flex justify-between text-lg font-bold">
+                  <div className="border-t border-[#1f1f1f] pt-2 mt-2 flex justify-between text-lg font-bold">
                     <span>Total:</span>
-                    <span className="text-blue-600">${getFinalPrice().toFixed(2)}</span>
+                    <span className="text-yellow-400">${getFinalPrice().toFixed(2)}</span>
                   </div>
                 </div>
               </div>
 
               <div className="mb-6">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="block text-sm font-medium text-gray-300 mb-2">
                   Promo Code (Optional)
                 </label>
                 <div className="flex gap-2">
                   <div className="relative flex-1">
-                    <Tag className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                    <Tag className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                     <input
                       type="text"
                       value={promoCode}
                       onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
                       placeholder="Enter code"
-                      className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full pl-10 pr-4 py-2 bg-black border border-[#1f1f1f] rounded-lg text-white focus:border-yellow-400 focus:ring-0"
                     />
                   </div>
                   <button
                     onClick={validatePromoCode}
-                    className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors font-medium"
+                    className="px-4 py-2 bg-[#111] text-gray-300 border border-[#1f1f1f] rounded-lg hover:border-yellow-400 transition-colors font-medium"
                   >
                     Apply
                   </button>
                 </div>
                 <p className="text-xs text-gray-500 mt-1">
-                  Use code <span className="font-mono font-semibold">TRINETRA</span> for free access
+                  Use code <span className="font-mono font-semibold text-yellow-400">TRINETRA</span> for free access
                 </p>
               </div>
 
@@ -285,7 +285,7 @@ export default function PricingModal({ userType, userAddress, onClose, onSuccess
                 <button
                   onClick={handlePayment}
                   disabled={loading}
-                  className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-yellow-400 text-black py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? (
                     <>
@@ -301,7 +301,7 @@ export default function PricingModal({ userType, userAddress, onClose, onSuccess
                 </button>
                 <button
                   onClick={() => setStep('select')}
-                  className="w-full py-3 text-gray-600 hover:text-gray-900 font-medium"
+                  className="w-full py-3 text-gray-400 hover:text-white font-medium"
                 >
                   Back to Plans
                 </button>
