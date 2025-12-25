@@ -131,7 +131,7 @@ export default function InstitutionDashboard() {
     return (
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="w-8 h-8 text-blue-600 animate-spin" />
+          <Loader2 className="w-8 h-8 text-amber-600 animate-spin" />
         </div>
       </div>
     );
@@ -141,8 +141,8 @@ export default function InstitutionDashboard() {
     return (
       <div className="max-w-6xl mx-auto">
         <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-            <Lock className="w-8 h-8 text-blue-600" />
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full mb-4">
+            <Lock className="w-8 h-8 text-amber-600" />
           </div>
           <h2 className="text-2xl font-bold text-gray-900 mb-4">Subscription Required</h2>
           <p className="text-gray-600 mb-6">
@@ -151,7 +151,7 @@ export default function InstitutionDashboard() {
           </p>
           <button
             onClick={() => setShowPricing(true)}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors inline-flex items-center"
+            className="px-6 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors inline-flex items-center"
           >
             <CreditCard className="w-5 h-5 mr-2" />
             View Pricing Plans
@@ -185,11 +185,12 @@ export default function InstitutionDashboard() {
                 <p className="text-sm text-gray-600 mb-1">Total Issued</p>
                 <p className="text-3xl font-bold text-gray-900">{stats.totalIssued}</p>
               </div>
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <Award className="w-6 h-6 text-blue-600" />
+              <div className="p-3 bg-amber-100 rounded-lg">
+                <Award className="w-6 h-6 text-amber-600" />
               </div>
             </div>
           </div>
+
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
@@ -201,11 +202,14 @@ export default function InstitutionDashboard() {
               </div>
             </div>
           </div>
+
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600 mb-1">Active</p>
-                <p className="text-3xl font-bold text-gray-900">{stats.totalIssued - stats.totalRevoked}</p>
+                <p className="text-3xl font-bold text-gray-900">
+                  {stats.totalIssued - stats.totalRevoked}
+                </p>
               </div>
               <div className="p-3 bg-purple-100 rounded-lg">
                 <Users className="w-6 h-6 text-purple-600" />
@@ -220,28 +224,30 @@ export default function InstitutionDashboard() {
           onClick={() => setActiveTab('issue')}
           className={`px-6 py-3 font-semibold transition-colors ${
             activeTab === 'issue'
-              ? 'border-b-2 border-blue-600 text-blue-600'
+              ? 'border-b-2 border-amber-600 text-amber-600'
               : 'text-gray-600 hover:text-gray-900'
           }`}
         >
           Issue Credential
         </button>
+
         <button
           onClick={() => setActiveTab('students')}
           className={`px-6 py-3 font-semibold transition-colors flex items-center ${
             activeTab === 'students'
-              ? 'border-b-2 border-blue-600 text-blue-600'
+              ? 'border-b-2 border-amber-600 text-amber-600'
               : 'text-gray-600 hover:text-gray-900'
           }`}
         >
           <Users className="w-4 h-4 mr-2" />
           Registered Students
         </button>
+
         <button
           onClick={() => setActiveTab('register')}
           className={`px-6 py-3 font-semibold transition-colors ${
             activeTab === 'register'
-              ? 'border-b-2 border-blue-600 text-blue-600'
+              ? 'border-b-2 border-amber-600 text-amber-600'
               : 'text-gray-600 hover:text-gray-900'
           }`}
         >
@@ -251,155 +257,175 @@ export default function InstitutionDashboard() {
 
       {activeTab === 'issue' && (
         <div className="bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Issue Academic Credential</h2>
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            Issue Academic Credential
+          </h2>
 
-        {success && (
-          <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <div className="flex items-start">
-              <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 mr-3" />
-              <div className="flex-1">
-                <h3 className="text-sm font-semibold text-green-900 mb-1">Credential Issued Successfully</h3>
-                <p className="text-sm text-green-700 mb-2">Token ID: {success.tokenId}</p>
-                <a
-                  href={`https://sepolia.etherscan.io/tx/${success.txHash}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm text-green-600 hover:text-green-800 underline"
-                >
-                  View Transaction
-                </a>
-              </div>
-            </div>
-          </div>
-        )}
-
-        {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-sm text-red-700">{error}</p>
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Student Name
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.studentName}
-              onChange={(e) => setFormData({ ...formData, studentName: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="John Doe"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Student Wallet Address
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.studentAddress}
-              onChange={(e) => setFormData({ ...formData, studentAddress: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent font-mono text-sm"
-              placeholder="0x..."
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Institution Name
-            </label>
-            <input
-              type="text"
-              required
-              value={formData.institution}
-              onChange={(e) => setFormData({ ...formData, institution: e.target.value })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="University of Technology"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Degree / Program
-              </label>
-              <input
-                type="text"
-                required
-                value={formData.degree}
-                onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Bachelor of Science"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Year of Graduation
-              </label>
-              <input
-                type="text"
-                required
-                value={formData.graduationYear}
-                onChange={(e) => setFormData({ ...formData, graduationYear: e.target.value })}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="2024"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              Upload Document
-            </label>
-            <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors">
-              <div className="space-y-1 text-center">
-                <Upload className="mx-auto h-12 w-12 text-gray-400" />
-                <div className="flex text-sm text-gray-600">
-                  <label
-                    htmlFor="document-upload"
-                    className="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500"
+          {success && (
+            <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
+              <div className="flex items-start">
+                <CheckCircle className="w-5 h-5 text-green-600 mt-0.5 mr-3" />
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold text-green-900 mb-1">
+                    Credential Issued Successfully
+                  </h3>
+                  <p className="text-sm text-green-700 mb-2">
+                    Token ID: {success.tokenId}
+                  </p>
+                  <a
+                    href={`https://sepolia.etherscan.io/tx/${success.txHash}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-green-600 hover:text-green-800 underline"
                   >
-                    <span>Upload a file</span>
-                    <input
-                      id="document-upload"
-                      name="document-upload"
-                      type="file"
-                      className="sr-only"
-                      accept=".pdf,.jpg,.jpeg,.png"
-                      onChange={handleFileChange}
-                      required
-                    />
-                  </label>
-                  <p className="pl-1">or drag and drop</p>
+                    View Transaction
+                  </a>
                 </div>
-                <p className="text-xs text-gray-500">PDF, PNG, JPG up to 10MB</p>
-                {formData.document && (
-                  <p className="text-sm text-green-600 mt-2">Selected: {formData.document.name}</p>
-                )}
               </div>
             </div>
-          </div>
+          )}
 
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
-          >
-            {loading ? (
-              <>
-                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                Issuing Credential...
-              </>
-            ) : (
-              'Issue Credential'
-            )}
-          </button>
-        </form>
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Student Name
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.studentName}
+                onChange={(e) =>
+                  setFormData({ ...formData, studentName: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                placeholder="John Doe"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Student Wallet Address
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.studentAddress}
+                onChange={(e) =>
+                  setFormData({ ...formData, studentAddress: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent font-mono text-sm"
+                placeholder="0x..."
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Institution Name
+              </label>
+              <input
+                type="text"
+                required
+                value={formData.institution}
+                onChange={(e) =>
+                  setFormData({ ...formData, institution: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                placeholder="University of Technology"
+              />
+            </div>
+
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Degree / Program
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.degree}
+                  onChange={(e) =>
+                    setFormData({ ...formData, degree: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  placeholder="Bachelor of Science"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Year of Graduation
+                </label>
+                <input
+                  type="text"
+                  required
+                  value={formData.graduationYear}
+                  onChange={(e) =>
+                    setFormData({ ...formData, graduationYear: e.target.value })
+                  }
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                  placeholder="2024"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                Upload Document
+              </label>
+              <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-lg hover:border-gray-400 transition-colors">
+                <div className="space-y-1 text-center">
+                  <Upload className="mx-auto h-12 w-12 text-gray-400" />
+                  <div className="flex text-sm text-gray-600">
+                    <label
+                      htmlFor="document-upload"
+                      className="relative cursor-pointer bg-white rounded-md font-medium text-amber-600 hover:text-amber-500"
+                    >
+                      <span>Upload a file</span>
+                      <input
+                        id="document-upload"
+                        name="document-upload"
+                        type="file"
+                        className="sr-only"
+                        accept=".pdf,.jpg,.jpeg,.png"
+                        onChange={handleFileChange}
+                        required
+                      />
+                    </label>
+                    <p className="pl-1">or drag and drop</p>
+                  </div>
+                  <p className="text-xs text-gray-500">
+                    PDF, PNG, JPG up to 10MB
+                  </p>
+                  {formData.document && (
+                    <p className="text-sm text-green-600 mt-2">
+                      Selected: {formData.document.name}
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-amber-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center justify-center"
+            >
+              {loading ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  Issuing Credential...
+                </>
+              ) : (
+                'Issue Credential'
+              )}
+            </button>
+          </form>
         </div>
       )}
 
